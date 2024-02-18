@@ -195,6 +195,7 @@ fn _getauxval(type_: c_ulong) -> *mut c_void {
     }
 }
 
+#[cfg(FALSE)]
 #[cfg(not(target_os = "wasi"))]
 #[no_mangle]
 unsafe extern "C" fn dl_iterate_phdr(
@@ -224,6 +225,16 @@ unsafe extern "C" fn dl_iterate_phdr(
     callback.unwrap()(&mut info, size_of::<libc::dl_phdr_info>(), data)
 }
 
+#[cfg(not(target_os = "wasi"))]
+#[no_mangle]
+unsafe extern "C" fn dlsym(handle: *mut c_void, symbol: *const c_char) -> *mut c_void {
+    extern "C" {
+        fn __dlsym(handle: *mut c_void, symbol: *const c_char) -> *mut c_void;
+    }
+    __dlsym(handle, symbol)
+}
+
+#[cfg(FALSE)]
 #[cfg(not(target_os = "wasi"))]
 #[no_mangle]
 unsafe extern "C" fn dlsym(handle: *mut c_void, symbol: *const c_char) -> *mut c_void {

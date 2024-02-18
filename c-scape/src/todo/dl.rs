@@ -1,3 +1,4 @@
+#[cfg(FALSE)]
 #[no_mangle]
 unsafe extern "C" fn dladdr() {
     todo!("dladdr")
@@ -10,6 +11,7 @@ unsafe extern "C" fn dlclose() {
 unsafe extern "C" fn dlerror() {
     todo!("dlerror")
 }
+#[cfg(FALSE)]
 #[no_mangle]
 unsafe extern "C" fn dlopen() {
     todo!("dlopen")

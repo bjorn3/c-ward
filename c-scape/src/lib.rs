@@ -149,11 +149,22 @@ unsafe impl Sync for UnsafeSendSyncVoidStar {}
 #[cfg(feature = "take-charge")]
 #[cfg(feature = "call-main")]
 #[no_mangle]
-unsafe fn origin_main(argc: usize, argv: *mut *mut u8, envp: *mut *mut u8) -> i32 {
-    extern "C" {
-        fn main(argc: i32, argv: *const *const u8, envp: *const *const u8) -> i32;
-    }
-    main(argc as _, argv as _, envp as _)
+unsafe extern "Rust" fn origin_main(argc: i32, argv: *mut *mut u8, envp: *mut *mut u8) -> i32 {
+    panic!();
+}
+
+#[no_mangle]
+unsafe extern "C" fn __libc_start_main(
+    main: unsafe extern "C" fn(i32, *mut *mut u8, *mut *mut u8) -> i32,
+    argc: i32,
+    argv: *mut *mut u8,
+    init: Option<unsafe extern "C" fn()>,
+    fini: Option<unsafe extern "C" fn()>,
+    rtld_fini: Option<unsafe extern "C" fn()>,
+) -> ! {
+    // FIXME Call .init_array contents
+    let envp = argv.add(argc as usize + 1);
+    exit(main(argc, argv, envp))
 }
 
 // utilities

@@ -26,3 +26,6 @@ members = [
 # makes it into the Rust compiler.
 [profile.dev.package.unwinding]
 debug = false
+
+[patch.crates-io]
+origin = { path = "../origin" }
