@@ -1,4 +1,3 @@
-/*
 //! `malloc`/`free`/etc. functions.
 //!
 //! TODO: Use `alloc_zeroed` and `realloc` instead of doing the work
@@ -97,9 +96,11 @@ unsafe fn tagged_dealloc(ptr: *mut u8) {
     }
 }
 
-#[linkage = "weak"]
 #[no_mangle]
-unsafe extern "C" fn malloc(size: usize) -> *mut c_void {
+unsafe extern "C" fn __malloc_donate(_start: *mut u8, _end: *mut u8) {}
+
+#[no_mangle]
+unsafe extern "C" fn __libc_malloc(size: usize) -> *mut c_void {
     libc!(libc::malloc(size));
 
     // If we're asked to allocate zero bytes, actually allocate 1 byte, so
@@ -131,7 +132,12 @@ unsafe extern "C" fn malloc(size: usize) -> *mut c_void {
 
 #[linkage = "weak"]
 #[no_mangle]
-unsafe extern "C" fn realloc(old: *mut c_void, size: usize) -> *mut c_void {
+unsafe extern "C" fn malloc(size: usize) -> *mut c_void {
+    __libc_malloc(size)
+}
+
+#[no_mangle]
+unsafe extern "C" fn __libc_realloc(old: *mut c_void, size: usize) -> *mut c_void {
     libc!(libc::realloc(old, size));
 
     if old.is_null() {
@@ -156,6 +162,13 @@ unsafe extern "C" fn realloc(old: *mut c_void, size: usize) -> *mut c_void {
     }
 }
 
+
+#[linkage = "weak"]
+#[no_mangle]
+unsafe extern "C" fn realloc(old: *mut c_void, size: usize) -> *mut c_void {
+    __libc_realloc(old, size)
+}
+
 #[no_mangle]
 unsafe extern "C" fn reallocarray(old: *mut c_void, nmemb: size_t, size: size_t) -> *mut c_void {
     libc!(libc::reallocarray(old, nmemb, size));
@@ -171,9 +184,8 @@ unsafe extern "C" fn reallocarray(old: *mut c_void, nmemb: size_t, size: size_t)
     realloc(old, product)
 }
 
-#[linkage = "weak"]
 #[no_mangle]
-unsafe extern "C" fn calloc(nmemb: usize, size: usize) -> *mut c_void {
+unsafe extern "C" fn __libc_calloc(nmemb: usize, size: usize) -> *mut c_void {
     libc!(libc::calloc(nmemb, size));
 
     let product = match nmemb.checked_mul(size) {
@@ -187,6 +199,12 @@ unsafe extern "C" fn calloc(nmemb: usize, size: usize) -> *mut c_void {
     let ptr = malloc(product);
     write_bytes(ptr, 0, product);
     ptr
+}
+
+#[linkage = "weak"]
+#[no_mangle]
+unsafe extern "C" fn calloc(nmemb: usize, size: usize) -> *mut c_void {
+    __libc_calloc(nmemb, size)
 }
 
 #[no_mangle]
@@ -268,9 +286,8 @@ unsafe extern "C" fn valloc(size: size_t) -> *mut c_void {
     memalign(rustix::param::page_size(), size)
 }
 
-#[linkage = "weak"]
 #[no_mangle]
-unsafe extern "C" fn free(ptr: *mut c_void) {
+unsafe extern "C" fn __libc_free(ptr: *mut c_void) {
     libc!(libc::free(ptr));
 
     if ptr.is_null() {
@@ -278,6 +295,12 @@ unsafe extern "C" fn free(ptr: *mut c_void) {
     }
 
     tagged_dealloc(ptr.cast());
+}
+
+#[linkage = "weak"]
+#[no_mangle]
+unsafe extern "C" fn free(ptr: *mut c_void) {
+    __libc_free(ptr)
 }
 
 #[no_mangle]
@@ -290,4 +313,3 @@ unsafe extern "C" fn malloc_usable_size(ptr: *mut c_void) -> size_t {
 
     get_layout(ptr.cast()).size()
 }
-*/
