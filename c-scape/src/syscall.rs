@@ -10,7 +10,6 @@ use libc::{c_char, size_t};
 use libc::{c_int, timespec};
 use libc::{c_long, c_void};
 
-/*
 // `syscall` usually returns `long`, but we make it a pointer type so that it
 // preserves provenance.
 #[cfg(not(target_os = "wasi"))]
@@ -172,7 +171,6 @@ unsafe extern "C" fn syscall(number: c_long, mut args: ...) -> *mut c_void {
         ),
     }
 }
-*/
 
 #[cfg(feature = "thread")]
 unsafe fn futex(
