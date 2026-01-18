@@ -109,7 +109,6 @@ unsafe extern "C" fn puts(s: *const c_char) -> c_int {
     }
 }
 
-/*
 #[no_mangle]
 unsafe extern "C" fn fwrite(
     ptr: *const c_void,
@@ -144,7 +143,6 @@ unsafe extern "C" fn fwrite_unlocked(
 
     fwrite(ptr, size, nmemb, file)
 }
-*/
 
 #[no_mangle]
 unsafe extern "C" fn fread(
@@ -715,7 +713,6 @@ unsafe fn parse_oflags(mode: *const c_char) -> Option<OFlags> {
     Some(oflags)
 }
 
-/*
 #[no_mangle]
 unsafe extern "C" fn printf(fmt: *const c_char, args: ...) -> c_int {
     vprintf(fmt, args)
@@ -872,7 +869,6 @@ unsafe extern "C" fn vasprintf(
 unsafe extern "C" fn asprintf(strp: *mut *mut c_char, fmt: *const c_char, args: ...) -> c_int {
     vasprintf(strp, fmt, args)
 }
-*/
 
 #[no_mangle]
 unsafe extern "C" fn perror(user_message: *const c_char) {

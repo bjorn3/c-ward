@@ -8,6 +8,18 @@ use libc::{c_int, c_uint, off64_t, off_t, size_t};
 use crate::convert_res;
 
 #[no_mangle]
+unsafe extern "C" fn __mmap(
+    addr: *mut c_void,
+    length: size_t,
+    prot: c_int,
+    flags: c_int,
+    fd: c_int,
+    offset: off_t,
+) -> *mut c_void {
+    mmap(addr, length, prot, flags, fd, offset as off64_t)
+}
+
+#[no_mangle]
 unsafe extern "C" fn mmap(
     addr: *mut c_void,
     length: size_t,
@@ -59,6 +71,11 @@ unsafe extern "C" fn mmap64(
 }
 
 #[no_mangle]
+unsafe extern "C" fn __munmap(ptr: *mut c_void, len: size_t) -> c_int {
+    munmap(ptr, len)
+}
+
+#[no_mangle]
 unsafe extern "C" fn munmap(ptr: *mut c_void, len: size_t) -> c_int {
     libc!(libc::munmap(ptr, len));
 
@@ -66,6 +83,17 @@ unsafe extern "C" fn munmap(ptr: *mut c_void, len: size_t) -> c_int {
         Some(()) => 0,
         None => -1,
     }
+}
+
+#[no_mangle]
+unsafe extern "C" fn __mremap(
+    old_address: *mut c_void,
+    old_size: size_t,
+    new_size: size_t,
+    flags: c_int,
+    mut args: ...
+) -> *mut c_void {
+    mremap(old_address, old_size, new_size, flags, args)
 }
 
 #[no_mangle]
@@ -107,6 +135,11 @@ unsafe extern "C" fn mremap(
             None => libc::MAP_FAILED,
         }
     }
+}
+
+#[no_mangle]
+unsafe extern "C" fn __mprotect(addr: *mut c_void, length: size_t, prot: c_int) -> c_int {
+    mprotect(addr, length, prot)
 }
 
 #[no_mangle]
