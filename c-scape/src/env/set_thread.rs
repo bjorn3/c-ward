@@ -23,13 +23,17 @@ use rustix::ffi::{CStr, CString};
 // The global `environ` pointer. We declare this as an `AtomicPtr` rather than
 // a `*mut T`; it has the same in-memory representation as a `*mut T`, and
 // using `AtomicPtr` allows us to atomically update it.
-#[no_mangle]
-static environ: AtomicPtr<*mut c_char> = AtomicPtr::new(null_mut());
+//#[no_mangle]
+//static environ: AtomicPtr<*mut c_char> = AtomicPtr::new(null_mut());
+extern "C" {
+    static environ: AtomicPtr<*mut c_char>;
+}
 
 pub(crate) unsafe fn load_environ() -> *mut *mut c_char {
     environ.load(Ordering::Relaxed)
 }
 
+/*
 #[cfg(not(target_os = "wasi"))]
 pub(super) fn init_from_envp(envp: *mut *mut c_char) {
     environ.store(envp, Ordering::Relaxed);
@@ -248,3 +252,4 @@ impl EnvironVecs {
         environ.store(leaked.as_mut_ptr(), Ordering::Relaxed);
     }
 }
+*/
