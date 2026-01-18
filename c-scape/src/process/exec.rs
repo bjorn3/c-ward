@@ -98,6 +98,15 @@ unsafe extern "C" fn execvp(file: *const c_char, argv: *const *const c_char) -> 
 }
 
 #[no_mangle]
+unsafe extern "C" fn __execvpe(
+    file: *const c_char,
+    argv: *const *const c_char,
+    envp: *const *const c_char,
+) -> c_int {
+    execvpe(file, argv, envp)
+}
+
+#[no_mangle]
 unsafe extern "C" fn execvpe(
     file: *const c_char,
     argv: *const *const c_char,

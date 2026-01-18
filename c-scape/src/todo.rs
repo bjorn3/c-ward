@@ -514,11 +514,11 @@ unsafe extern "C" fn optopt() {
 unsafe extern "C" fn opterr() {
     todo!("opterr")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn posix_spawn() {
     todo!("posix_spawn")
 }
-/*
 #[no_mangle]
 unsafe extern "C" fn pthread_attr_getinheritsched() {
     todo!("pthread_attr_getinheritsched")

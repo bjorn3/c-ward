@@ -1,3 +1,4 @@
+/*
 use core::ffi::VaList;
 use errno::{set_errno, Errno};
 use rustix::fd::{BorrowedFd, IntoRawFd};
@@ -159,3 +160,4 @@ impl Flock for libc::flock64 {
         self.l_pid = pid;
     }
 }
+*/

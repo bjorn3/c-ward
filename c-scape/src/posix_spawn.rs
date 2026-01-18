@@ -1,3 +1,4 @@
+/*
 use libc::{c_int, c_void};
 
 #[cfg(not(target_os = "wasi"))]
@@ -96,3 +97,4 @@ unsafe extern "C" fn posix_spawn_file_actions_init(_ptr: *const c_void) -> c_int
     .ok();
     0
 }
+*/
