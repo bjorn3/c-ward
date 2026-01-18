@@ -14,6 +14,11 @@ fn rustix_timespec_to_libc_timespec(
 }
 
 #[no_mangle]
+unsafe extern "C" fn __clock_gettime(id: c_int, tp: *mut libc::timespec) -> c_int {
+    clock_gettime(id, tp)
+}
+
+#[no_mangle]
 unsafe extern "C" fn clock_gettime(id: c_int, tp: *mut libc::timespec) -> c_int {
     libc!(libc::clock_gettime(id, tp));
 

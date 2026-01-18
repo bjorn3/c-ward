@@ -79,6 +79,11 @@ unsafe extern "C" fn strchr(s: *const c_char, c: c_int) -> *mut c_char {
 }
 
 #[no_mangle]
+unsafe extern "C" fn __strchrnul(s: *const c_char, c: c_int) -> *mut c_char {
+    strchrnul(s, c)
+}
+
+#[no_mangle]
 unsafe extern "C" fn strchrnul(s: *const c_char, c: c_int) -> *mut c_char {
     libc!(libc::strchrnul(s, c));
 
