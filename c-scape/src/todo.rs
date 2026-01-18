@@ -288,10 +288,12 @@ unsafe extern "C" fn setfsuid() {
 unsafe extern "C" fn setfsgid() {
     todo!("setfsgid")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn strftime() {
     todo!("strftime")
 }
+*/
 #[no_mangle]
 unsafe extern "C" fn wcsftime() {
     todo!("wcsftime")
@@ -304,10 +306,12 @@ unsafe extern "C" fn __isoc99_scanf() {
 unsafe extern "C" fn __isoc99_sscanf() {
     todo!("__isoc99_sscanf")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn pthread_kill() {
     todo!("pthread_kill")
 }
+*/
 #[no_mangle]
 unsafe extern "C" fn __fdelt_chk() {
     todo!("__fdelt_chk")

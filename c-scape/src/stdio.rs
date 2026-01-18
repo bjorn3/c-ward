@@ -109,6 +109,7 @@ unsafe extern "C" fn puts(s: *const c_char) -> c_int {
     }
 }
 
+/*
 #[no_mangle]
 unsafe extern "C" fn fwrite(
     ptr: *const c_void,
@@ -143,6 +144,7 @@ unsafe extern "C" fn fwrite_unlocked(
 
     fwrite(ptr, size, nmemb, file)
 }
+*/
 
 #[no_mangle]
 unsafe extern "C" fn fread(

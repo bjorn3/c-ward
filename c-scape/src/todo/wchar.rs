@@ -1,3 +1,4 @@
+/*
 //! C wide-character and multibyte-character APIs.
 
 #[no_mangle]
@@ -288,3 +289,4 @@ unsafe extern "C" fn towupper() {
 unsafe extern "C" fn towlower() {
     todo!("towlower")
 }
+*/

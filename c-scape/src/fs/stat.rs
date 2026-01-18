@@ -117,6 +117,11 @@ unsafe extern "C" fn fstatat64(
 }
 
 #[no_mangle]
+unsafe extern "C" fn __fstat(fd: c_int, stat_: *mut libc::stat) -> c_int {
+    fstat(fd, stat_)
+}
+
+#[no_mangle]
 unsafe extern "C" fn fstat(fd: c_int, stat_: *mut libc::stat) -> c_int {
     libc!(libc::fstat(fd, stat_));
 
