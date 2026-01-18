@@ -9,9 +9,9 @@ use libc::*;
 use origin::signal::{Sigaction, SigactionFlags};
 */
 use rustix::process::Signal;
-/*
 use rustix::runtime::{How, KernelSigSet, Siginfo, Stack, KERNEL_SIGRTMAX, KERNEL_SIGRTMIN};
 
+/*
 #[no_mangle]
 unsafe extern "C" fn signal(signal: c_int, handler: sighandler_t) -> sighandler_t {
     libc!(libc::signal(signal, handler));
@@ -658,7 +658,6 @@ unsafe extern "C" fn strsignal(sig: c_int) -> *mut c_char {
     }
 }
 
-/*
 /// This function conforms to the [LSB `__libc_current_sigrtmin`] ABI.
 ///
 /// [LSB `__libc_current_sigrtmin`]: https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib---libc-current-sigrtmin-1.html
@@ -981,4 +980,3 @@ mod tests {
         }
     }
 }
-*/
