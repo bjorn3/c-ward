@@ -1,4 +1,3 @@
-/*
 use rustix_futex_sync::lock_api::RawRwLock as _;
 use rustix_futex_sync::RawRwLock;
 
@@ -64,6 +63,11 @@ unsafe extern "C" fn pthread_rwlock_destroy(rwlock: *mut PthreadRwlockT) -> c_in
 }
 
 #[no_mangle]
+unsafe extern "C" fn __pthread_rwlock_wrlock(rwlock: *mut PthreadRwlockT) -> c_int {
+    pthread_rwlock_wrlock(rwlock)
+}
+
+#[no_mangle]
 unsafe extern "C" fn pthread_rwlock_wrlock(rwlock: *mut PthreadRwlockT) -> c_int {
     libc!(libc::pthread_rwlock_wrlock(checked_cast!(rwlock)));
     (*rwlock).lock.lock_exclusive();
@@ -113,11 +117,21 @@ unsafe extern "C" fn pthread_rwlock_trywrlock(rwlock: *mut PthreadRwlockT) -> c_
 }
 
 #[no_mangle]
+unsafe extern "C" fn __pthread_rwlock_rdlock(rwlock: *mut PthreadRwlockT) -> c_int {
+    pthread_rwlock_rdlock(rwlock)
+}
+
+#[no_mangle]
 unsafe extern "C" fn pthread_rwlock_rdlock(rwlock: *mut PthreadRwlockT) -> c_int {
     libc!(libc::pthread_rwlock_rdlock(checked_cast!(rwlock)));
     (*rwlock).lock.lock_shared();
     (*rwlock).exclusive.store(false, Ordering::SeqCst);
     0
+}
+
+#[no_mangle]
+unsafe extern "C" fn __pthread_rwlock_unlock(rwlock: *mut PthreadRwlockT) -> c_int {
+    pthread_rwlock_unlock(rwlock)
 }
 
 #[no_mangle]
@@ -138,4 +152,3 @@ unsafe extern "C" fn pthread_rwlock_unlock(rwlock: *mut PthreadRwlockT) -> c_int
     }
     0
 }
-*/

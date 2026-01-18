@@ -1,4 +1,3 @@
-/*
 use rustix_futex_sync::lock_api::{RawMutex as _, RawReentrantMutex};
 use rustix_futex_sync::{RawCondvar, RawMutex};
 
@@ -351,4 +350,3 @@ unsafe extern "C" fn pthread_cond_timedwait(
         other => unimplemented!("unsupported pthread mutex kind {}", other),
     }
 }
-*/
