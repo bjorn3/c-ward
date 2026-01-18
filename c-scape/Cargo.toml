@@ -23,7 +23,6 @@ rustix = { version = "1.0.0", default-features = false, features = ["event", "fs
 rustix-futex-sync = { version = "0.4.0", features = ["atomic_usize"] }
 memoffset = "0.9.0"
 realpath-ext = { version = "0.1.0", default-features = false }
-origin = { version = "0.26.1", default-features = false, features = ["init-fini-arrays", "program-at-exit", "thread-at-exit", "nightly", "getauxval"] }
 # We use the libc crate for C ABI types and constants, but we don't depend on
 # the actual platform libc.
 libc = { version = "0.2.155", default-features = false }
@@ -61,10 +60,11 @@ features = [
 [dev-dependencies]
 libc = "0.2.155"
 static_assertions = "1.1.0"
+unwinding = "0.2.8"
 
 [features]
 default = ["thread", "std", "coexist-with-libc", "threadsafe-setenv"]
-thread = ["origin/unstable-errno"]
+thread = []
 std = ["rustix/std", "printf-compat/std"]
 
 # In "take-charge" mode, this enables code in c-scape to define the
@@ -74,20 +74,20 @@ std = ["rustix/std", "printf-compat/std"]
 call-main = []
 
 # Enable logging of program and thread startup and shutdown.
-log = ["origin/log"]
+log = []
 
 # Install `atomic_dbg::log` as a logger.
-atomic-dbg-logger = ["origin/atomic-dbg-logger"]
+atomic-dbg-logger = []
 
 # Install the `env_logger` crate as a logger.
-env_logger = ["origin/env_logger"]
+env_logger = []
 
 # Disable logging.
-max_level_off = ["origin/max_level_off"]
+max_level_off = []
 
 # Enable highly experimental support for performing startup-time relocations,
 # needed to support statically-linked PIE executables.
-experimental-relocate = ["origin/experimental-relocate"]
+experimental-relocate = []
 
 # A feature that pulls in all the individual features needed to use
 # c-scape to write Rust programs completely implemented in Rust.
@@ -101,11 +101,11 @@ eyra = [
 # One of the following two features must be enabled:
 
 # Enable this to tell c-scape to take control of the process.
-take-charge = ["origin/origin-start", "origin/signal"]
+take-charge = []
 
 # Enable this to tell c-scape to let a libc be in control of
 # the process.
-coexist-with-libc = ["origin/libc"]
+coexist-with-libc = []
 
 # One of the following two features must be enabled:
 
@@ -142,12 +142,12 @@ deprecated-and-unimplemented = []
 # [the "personality" feature of the unwinding crate] for more details.
 #
 # [the "personality" feature of the unwinding crate]: https://crates.io/crates/unwinding#personality-and-other-utilities
-eh-personality = ["origin/eh-personality"]
+eh-personality = ["unwinding/personality"]
 
 # Provide a `#[lang = eh_personality]` function that just returns
 # `CONTINUE_UNWIND` (for no-std). Use this if you know your program will never
 # unwind and don't want any extra code.
-eh-personality-continue = ["origin/eh-personality-continue"]
+eh-personality-continue = ["unwinding/personality-dummy"]
 
 # Provide a `#[panic_handler]` function suitable for unwinding (for no-std).
 #
@@ -158,11 +158,11 @@ eh-personality-continue = ["origin/eh-personality-continue"]
 # [the "panic-handler" feature of the unwinding crate] for more details.
 #
 # [the "panic-handler" feature of the unwinding crate]: https://crates.io/crates/unwinding#personality-and-other-utilities
-panic-handler = ["origin/panic-handler"]
+panic-handler = ["unwinding/panic-handler"]
 
 # Provide a `#[panic_handler]` function that just traps (for no-std). Use this
 # if you know your program will never panic and don't want any extra code.
-panic-handler-trap = ["origin/panic-handler-trap"]
+panic-handler-trap = ["unwinding/panic-handler-dummy"]
 
 # Provide a `#[global_allocator]` function (for no-std).
 #

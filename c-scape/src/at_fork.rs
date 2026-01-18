@@ -1,3 +1,4 @@
+/*
 use alloc::vec::Vec;
 use rustix_futex_sync::Mutex;
 
@@ -79,3 +80,4 @@ pub(crate) unsafe fn fork() -> rustix::io::Result<Option<rustix::process::Pid>> 
         }
     }
 }
+*/

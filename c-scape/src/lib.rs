@@ -21,6 +21,8 @@ compile_error!("Enable one \"coexist-with-libc\" and \"take-charge\".");
 
 extern crate alloc;
 
+use unwinding as _;
+
 // Re-export the libc crate's API. This allows users to depend on the c-scape
 // crate in place of libc.
 pub use libc::*;
@@ -130,6 +132,7 @@ unsafe impl Send for UnsafeSendSyncVoidStar {}
 #[cfg(feature = "take-charge")]
 unsafe impl Sync for UnsafeSendSyncVoidStar {}
 
+/*
 /// This function is called by Origin.
 ///
 /// SAFETY: `argc`, `argv`, and `envp` describe incoming program
@@ -143,6 +146,7 @@ unsafe fn origin_main(argc: usize, argv: *mut *mut u8, envp: *mut *mut u8) -> i3
     }
     main(argc as _, argv as _, envp as _)
 }
+*/
 
 // utilities
 
@@ -170,7 +174,8 @@ unsafe impl rustix_futex_sync::lock_api::GetThreadId for GetThreadId {
         // Use the current thread "raw" value, which origin guarantees uniquely
         // identifies a thread. `thread::current_id` would also work, but would
         // be slightly slower on some architectures.
-        origin::thread::current().to_raw_non_null().addr()
+        //origin::thread::current().to_raw_non_null().addr()
+        (unsafe { libc::gettid() } as usize).try_into().unwrap()
     }
 }
 

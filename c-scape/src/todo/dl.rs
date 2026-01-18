@@ -1,3 +1,4 @@
+/*
 #[no_mangle]
 unsafe extern "C" fn dladdr() {
     todo!("dladdr")
@@ -14,3 +15,4 @@ unsafe extern "C" fn dlerror() {
 unsafe extern "C" fn dlopen() {
     todo!("dlopen")
 }
+*/

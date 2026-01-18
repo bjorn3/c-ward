@@ -1,3 +1,4 @@
+/*
 //! Unimplemented pthread cancellation functions.
 //!
 //! Thread cancellation is not used by Rust code, and more broadly, it adds a
@@ -42,3 +43,4 @@ unsafe extern "C" fn pthread_setcanceltype() -> c_int {
 unsafe extern "C" fn pthread_testcancel() -> c_int {
     todo!("pthread_testcancel")
 }
+*/

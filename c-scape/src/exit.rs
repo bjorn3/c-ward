@@ -1,6 +1,7 @@
 use alloc::boxed::Box;
 use libc::{c_int, c_void};
 
+/*
 /// Register a function to be called when `exit` is called.
 ///
 /// This function conforms to the [LSB `__cxa_atexit`] ABI.
@@ -64,6 +65,7 @@ unsafe extern "C" fn _exit(status: c_int) -> ! {
     libc!(libc::_exit(status));
     _Exit(status)
 }
+*/
 
 #[cold]
 #[no_mangle]

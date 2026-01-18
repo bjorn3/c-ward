@@ -1,3 +1,4 @@
+/*
 //! `malloc`/`free`/etc. functions.
 //!
 //! TODO: Use `alloc_zeroed` and `realloc` instead of doing the work
@@ -289,3 +290,4 @@ unsafe extern "C" fn malloc_usable_size(ptr: *mut c_void) -> size_t {
 
     get_layout(ptr.cast()).size()
 }
+*/

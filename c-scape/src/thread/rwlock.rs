@@ -1,3 +1,4 @@
+/*
 use rustix_futex_sync::lock_api::RawRwLock as _;
 use rustix_futex_sync::RawRwLock;
 
@@ -137,3 +138,4 @@ unsafe extern "C" fn pthread_rwlock_unlock(rwlock: *mut PthreadRwlockT) -> c_int
     }
     0
 }
+*/

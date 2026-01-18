@@ -516,6 +516,7 @@ unsafe extern "C" fn opterr() {
 unsafe extern "C" fn posix_spawn() {
     todo!("posix_spawn")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn pthread_attr_getinheritsched() {
     todo!("pthread_attr_getinheritsched")
@@ -628,6 +629,7 @@ unsafe extern "C" fn pthread_rwlockattr_setpshared() {
 unsafe extern "C" fn pthread_setschedparam() {
     todo!("pthread_setschedparam")
 }
+*/
 #[cfg(not(feature = "std"))]
 #[no_mangle]
 unsafe extern "C" fn system() {

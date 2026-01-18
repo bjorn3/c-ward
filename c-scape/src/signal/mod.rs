@@ -1,3 +1,4 @@
+/*
 use crate::convert_res;
 use core::mem::{size_of, size_of_val, transmute, zeroed};
 use core::ptr::{addr_of, addr_of_mut, copy_nonoverlapping};
@@ -974,3 +975,4 @@ mod tests {
         }
     }
 }
+*/

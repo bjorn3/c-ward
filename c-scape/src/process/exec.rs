@@ -113,7 +113,7 @@ unsafe extern "C" fn execvpe(
         return -1;
     }
 
-    let path = crate::env::get::_getenv(b"PATH");
+    let path = libc::getenv(c"PATH".as_ptr());
     let path = if path.is_null() {
         c"/bin:/usr/bin"
     } else {

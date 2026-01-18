@@ -1,3 +1,4 @@
+/*
 // `__*_chk` functions that have to live in c-gull because they depend on
 // C functions not in the libc crate, due to `VaList` being unstable.
 
@@ -167,3 +168,4 @@ unsafe extern "C" fn __vdprintf_chk(
 
     super::vdprintf(fd, fmt, va_list)
 }
+*/

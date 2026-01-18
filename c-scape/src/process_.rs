@@ -101,7 +101,7 @@ unsafe fn _sysconf(name: c_int) -> c_long {
 
         libc::_SC_THREAD_STACK_MIN => libc::PTHREAD_STACK_MIN as _,
 
-        _ => panic!("unrecognized sysconf({})", name),
+        _ => 0,//panic!("unrecognized sysconf({})", name),
     }
 }
 
@@ -159,7 +159,7 @@ fn _pathconf(name: c_int) -> c_long {
         _ => panic!("unrecognized pathconf({})", name),
     }
 }
-
+/*
 #[cfg(not(target_os = "wasi"))]
 #[no_mangle]
 unsafe extern "C" fn dl_iterate_phdr(
@@ -237,6 +237,7 @@ unsafe extern "C" fn sched_yield() -> c_int {
     origin::thread::yield_current();
     0
 }
+*/
 
 #[cfg(not(target_os = "wasi"))]
 #[no_mangle]

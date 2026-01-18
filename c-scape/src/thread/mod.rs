@@ -4,6 +4,7 @@ mod once;
 mod rwlock;
 mod spinlock;
 
+/*
 use alloc::boxed::Box;
 use alloc::format;
 use core::ffi::c_void;
@@ -528,3 +529,5 @@ unsafe extern "C" fn ___tls_get_addr() {
     //libc!(libc::___tls_get_addr());
     todo!("___tls_get_addr")
 }
+*/
+*/

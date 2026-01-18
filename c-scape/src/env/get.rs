@@ -1,3 +1,4 @@
+/*
 //! Environment variable handling.
 
 use core::ptr::null_mut;
@@ -75,3 +76,4 @@ static INIT_ARRAY: unsafe extern "C" fn(c_int, *mut *mut c_char, *mut *mut c_cha
 
 #[cfg(not(any(target_env = "gnu", feature = "take-charge")))]
 static INIT_ARRAY: Unimplemented = Unimplemented::new();
+*/

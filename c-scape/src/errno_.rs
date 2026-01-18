@@ -4,6 +4,7 @@ use core::cell::SyncUnsafeCell;
 use core::ptr::{copy_nonoverlapping, null_mut};
 use libc::{c_char, c_int};
 
+/*
 /// Return the address of the thread-local `errno` state.
 ///
 /// This function conforms to the [LSB `__errno_location`] ABI.
@@ -23,6 +24,7 @@ unsafe extern "C" fn __errno_location() -> *mut c_int {
         return core::ptr::addr_of_mut!(ERRNO);
     }
 }
+*/
 
 #[no_mangle]
 unsafe extern "C" fn strerror(errnum: c_int) -> *mut c_char {
@@ -45,6 +47,7 @@ unsafe extern "C" fn __xpg_strerror_r(errnum: c_int, buf: *mut c_char, buflen: u
         return libc::ERANGE;
     }
 
+    /*
     let message = if errnum == 0 {
         "Success".to_owned()
     } else {
@@ -56,6 +59,8 @@ unsafe extern "C" fn __xpg_strerror_r(errnum: c_int, buf: *mut c_char, buflen: u
 
     let min = core::cmp::min(buflen - 1, message.len());
     copy_nonoverlapping(message.as_ptr().cast(), buf, min);
+    */
+    let min = 0;
     buf.add(min).write(b'\0' as libc::c_char);
     0
 }

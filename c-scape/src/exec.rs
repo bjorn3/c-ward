@@ -1,3 +1,4 @@
+/*
 use crate::convert_res;
 use libc::{c_int, c_void};
 
@@ -44,3 +45,4 @@ unsafe extern "C" fn clone3() {
     // We also have disabled `clone3` support in `dlsym` for now.
     todo!("clone3")
 }
+*/
