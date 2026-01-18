@@ -1,4 +1,3 @@
-/*
 //! Time and date conversion routines.
 //!
 //! This code is highly experimental.
@@ -418,4 +417,3 @@ unsafe fn clear_timezone(guard: &mut MutexGuard<'_, (Option<CString>, Option<CSt
     timezone = 0;
     daylight = 0;
 }
-*/

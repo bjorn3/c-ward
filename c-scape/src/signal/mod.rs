@@ -3,9 +3,13 @@ use crate::convert_res;
 use core::mem::{size_of, size_of_val, transmute, zeroed};
 use core::ptr::{addr_of, addr_of_mut, copy_nonoverlapping};
 use errno::{set_errno, Errno};
+*/
 use libc::*;
+/*
 use origin::signal::{Sigaction, SigactionFlags};
+*/
 use rustix::process::Signal;
+/*
 use rustix::runtime::{How, KernelSigSet, Siginfo, Stack, KERNEL_SIGRTMAX, KERNEL_SIGRTMIN};
 
 #[no_mangle]
@@ -377,6 +381,7 @@ unsafe extern "C" fn sigtimedwait(
         None => -1,
     }
 }
+*/
 
 #[no_mangle]
 unsafe extern "C" fn strsignal(sig: c_int) -> *mut c_char {
@@ -653,6 +658,7 @@ unsafe extern "C" fn strsignal(sig: c_int) -> *mut c_char {
     }
 }
 
+/*
 /// This function conforms to the [LSB `__libc_current_sigrtmin`] ABI.
 ///
 /// [LSB `__libc_current_sigrtmin`]: https://refspecs.linuxbase.org/LSB_5.0.0/LSB-Core-generic/LSB-Core-generic/baselib---libc-current-sigrtmin-1.html

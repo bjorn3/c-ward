@@ -288,12 +288,10 @@ unsafe extern "C" fn setfsuid() {
 unsafe extern "C" fn setfsgid() {
     todo!("setfsgid")
 }
-/*
 #[no_mangle]
 unsafe extern "C" fn strftime() {
     todo!("strftime")
 }
-*/
 #[no_mangle]
 unsafe extern "C" fn wcsftime() {
     todo!("wcsftime")

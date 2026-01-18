@@ -1,4 +1,3 @@
-/*
 //! C wide-character and multibyte-character APIs.
 
 #[no_mangle]
@@ -29,10 +28,12 @@ unsafe extern "C" fn putwchar() {
 unsafe extern "C" fn wcsdup() {
     todo!("wcsdup")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn wcslen() {
     todo!("wcslen")
 }
+*/
 #[no_mangle]
 unsafe extern "C" fn wcsncasecmp() {
     todo!("wcsncasecmp")
@@ -61,6 +62,7 @@ unsafe extern "C" fn wcstoull() {
 unsafe extern "C" fn wcrtomb() {
     todo!("wcrtomb")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn wcschr() {
     todo!("wcschr")
@@ -69,6 +71,7 @@ unsafe extern "C" fn wcschr() {
 unsafe extern "C" fn wcscmp() {
     todo!("wcscmp")
 }
+*/
 #[no_mangle]
 unsafe extern "C" fn wcscpy() {
     todo!("wcscpy")
@@ -81,10 +84,12 @@ unsafe extern "C" fn wcsncpy() {
 unsafe extern "C" fn wcsstr() {
     todo!("wcsstr")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn wctob() {
     todo!("wctob")
 }
+*/
 #[no_mangle]
 unsafe extern "C" fn wcscasecmp() {
     todo!("wcscasecmp")
@@ -133,6 +138,7 @@ unsafe extern "C" fn wcscat() {
 unsafe extern "C" fn wcstombs() {
     todo!("wcstombs")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn wctype() {
     todo!("wctype")
@@ -153,6 +159,7 @@ unsafe extern "C" fn wmemmove() {
 unsafe extern "C" fn wmemset() {
     todo!("wmemset")
 }
+*/
 #[no_mangle]
 unsafe extern "C" fn wcsncat() {
     todo!("wcsncat")
@@ -209,10 +216,12 @@ unsafe extern "C" fn vswprintf() {
 unsafe extern "C" fn wprintf() {
     todo!("wprintf")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn btowc() {
     todo!("btowc")
 }
+*/
 #[no_mangle]
 unsafe extern "C" fn fgetwc() {
     todo!("fgetwc")
@@ -229,10 +238,12 @@ unsafe extern "C" fn fputws() {
 unsafe extern "C" fn fwide() {
     todo!("fwide")
 }
+/*
 #[no_mangle]
 unsafe extern "C" fn iswctype() {
     todo!("iswctype")
 }
+*/
 #[no_mangle]
 unsafe extern "C" fn iswalnum() {
     todo!("iswalnum")
@@ -289,4 +300,3 @@ unsafe extern "C" fn towupper() {
 unsafe extern "C" fn towlower() {
     todo!("towlower")
 }
-*/
