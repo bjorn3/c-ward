@@ -47,7 +47,6 @@ unsafe extern "C" fn __xpg_strerror_r(errnum: c_int, buf: *mut c_char, buflen: u
         return libc::ERANGE;
     }
 
-    /*
     let message = if errnum == 0 {
         "Success".to_owned()
     } else {
@@ -59,8 +58,6 @@ unsafe extern "C" fn __xpg_strerror_r(errnum: c_int, buf: *mut c_char, buflen: u
 
     let min = core::cmp::min(buflen - 1, message.len());
     copy_nonoverlapping(message.as_ptr().cast(), buf, min);
-    */
-    let min = 0;
     buf.add(min).write(b'\0' as libc::c_char);
     0
 }
