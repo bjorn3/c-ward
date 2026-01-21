@@ -714,30 +714,24 @@ unsafe fn parse_oflags(mode: *const c_char) -> Option<OFlags> {
 }
 
 #[no_mangle]
-unsafe extern "C" fn printf(fmt: *const c_char, mut args: ...) -> c_int {
-    let va_list = args.as_va_list();
-    vprintf(fmt, va_list)
+unsafe extern "C" fn printf(fmt: *const c_char, args: ...) -> c_int {
+    vprintf(fmt, args)
 }
 
 #[no_mangle]
-unsafe extern "C" fn vprintf(fmt: *const c_char, va_list: VaList<'_, '_>) -> c_int {
+unsafe extern "C" fn vprintf(fmt: *const c_char, va_list: VaList<'_>) -> c_int {
     //libc!(libc::vprintf(fmt, va_list));
 
     vfprintf(stdout, fmt, va_list)
 }
 
 #[no_mangle]
-unsafe extern "C" fn sprintf(ptr: *mut c_char, fmt: *const c_char, mut args: ...) -> c_int {
-    let va_list = args.as_va_list();
-    vsprintf(ptr, fmt, va_list)
+unsafe extern "C" fn sprintf(ptr: *mut c_char, fmt: *const c_char, args: ...) -> c_int {
+    vsprintf(ptr, fmt, args)
 }
 
 #[no_mangle]
-unsafe extern "C" fn vsprintf(
-    ptr: *mut c_char,
-    fmt: *const c_char,
-    va_list: VaList<'_, '_>,
-) -> c_int {
+unsafe extern "C" fn vsprintf(ptr: *mut c_char, fmt: *const c_char, va_list: VaList<'_>) -> c_int {
     //libc!(libc::vsprintf(ptr, fmt, va_list));
 
     let mut out = String::new();
@@ -762,10 +756,9 @@ unsafe extern "C" fn snprintf(
     ptr: *mut c_char,
     len: usize,
     fmt: *const c_char,
-    mut args: ...
+    args: ...
 ) -> c_int {
-    let va_list = args.as_va_list();
-    vsnprintf(ptr, len, fmt, va_list)
+    vsnprintf(ptr, len, fmt, args)
 }
 
 #[no_mangle]
@@ -773,7 +766,7 @@ unsafe extern "C" fn vsnprintf(
     ptr: *mut c_char,
     len: usize,
     fmt: *const c_char,
-    va_list: VaList<'_, '_>,
+    va_list: VaList<'_>,
 ) -> c_int {
     //libc!(libc::vsnprintf(ptr, len, fmt, va_list));
 
@@ -797,13 +790,12 @@ unsafe extern "C" fn vsnprintf(
 }
 
 #[no_mangle]
-unsafe extern "C" fn dprintf(fd: c_int, fmt: *const c_char, mut args: ...) -> c_int {
-    let va_list = args.as_va_list();
-    vdprintf(fd, fmt, va_list)
+unsafe extern "C" fn dprintf(fd: c_int, fmt: *const c_char, args: ...) -> c_int {
+    vdprintf(fd, fmt, args)
 }
 
 #[no_mangle]
-unsafe extern "C" fn vdprintf(fd: c_int, fmt: *const c_char, va_list: VaList<'_, '_>) -> c_int {
+unsafe extern "C" fn vdprintf(fd: c_int, fmt: *const c_char, va_list: VaList<'_>) -> c_int {
     //libc!(libc::vdprintf(fd, fmt, va_list));
 
     let mut out = String::new();
@@ -830,16 +822,15 @@ unsafe extern "C" fn vdprintf(fd: c_int, fmt: *const c_char, va_list: VaList<'_,
 }
 
 #[no_mangle]
-unsafe extern "C" fn fprintf(file: *mut libc::FILE, fmt: *const c_char, mut args: ...) -> c_int {
-    let va_list = args.as_va_list();
-    vfprintf(file, fmt, va_list)
+unsafe extern "C" fn fprintf(file: *mut libc::FILE, fmt: *const c_char, args: ...) -> c_int {
+    vfprintf(file, fmt, args)
 }
 
 #[no_mangle]
 unsafe extern "C" fn vfprintf(
     file: *mut libc::FILE,
     fmt: *const c_char,
-    va_list: VaList<'_, '_>,
+    va_list: VaList<'_>,
 ) -> c_int {
     //libc!(libc::vfprintf(file, fmt, va_list));
 
@@ -858,9 +849,9 @@ unsafe extern "C" fn vfprintf(
 unsafe extern "C" fn vasprintf(
     strp: *mut *mut c_char,
     fmt: *const c_char,
-    va_list: VaList<'_, '_>,
+    va_list: VaList<'_>,
 ) -> c_int {
-    let len = va_list.with_copy(|va_list| vsnprintf(null_mut(), 0, fmt, va_list));
+    let len = vsnprintf(null_mut(), 0, fmt, va_list.clone());
     if len < 0 {
         return -1;
     }
@@ -875,9 +866,8 @@ unsafe extern "C" fn vasprintf(
 }
 
 #[no_mangle]
-unsafe extern "C" fn asprintf(strp: *mut *mut c_char, fmt: *const c_char, mut args: ...) -> c_int {
-    let va_list = args.as_va_list();
-    vasprintf(strp, fmt, va_list)
+unsafe extern "C" fn asprintf(strp: *mut *mut c_char, fmt: *const c_char, args: ...) -> c_int {
+    vasprintf(strp, fmt, args)
 }
 
 #[no_mangle]

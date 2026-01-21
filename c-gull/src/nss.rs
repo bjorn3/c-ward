@@ -305,10 +305,8 @@ unsafe fn getgr_r(
     };
     let pad = align_of::<*const c_char>() - (buf.addr()) % align_of::<*const c_char>();
     buf = buf.add(pad);
-    buflen -= pad;
     let gr_mem = buf.cast::<*mut c_char>();
     buf = gr_mem.add(num_members + 1).cast::<c_char>();
-    buflen -= buf.addr() - gr_mem.addr();
 
     let mut cur_mem = gr_mem;
     if num_members != 0 {
@@ -319,7 +317,6 @@ unsafe fn getgr_r(
             buf = buf.add(member.len());
             write(buf, 0);
             buf = buf.add(1);
-            buflen -= member.len() + 1;
         }
     }
     write(cur_mem, null_mut());

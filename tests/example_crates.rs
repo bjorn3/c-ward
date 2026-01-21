@@ -140,14 +140,57 @@ fn example_crate_c_scape_unwinding() {
 
 #[test]
 fn example_crate_c_gull_unwinding() {
-    test_crate(
-        "c-gull-unwinding",
-        &[],
-        &[("RUST_BACKTRACE", "0")],
-        "Hello, world!\nHello world using libc `printf`!\n",
-        "\nthread 'main' panicked at src/main.rs:18:5:\ncatch me!\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n",
-        None,
+    // Note: Rust's default unwind now prints a message with the process's PID. The assert_cmd
+    // command does not let us get the child's PID. So we have to use the std::process::Command API
+    // instead.
+    use std::process::Command;
+    use std::process::Stdio;
+
+    #[cfg(target_arch = "x86_64")]
+    let arch = "x86_64";
+    #[cfg(target_arch = "aarch64")]
+    let arch = "aarch64";
+    #[cfg(target_arch = "riscv64")]
+    let arch = "riscv64gc";
+    #[cfg(target_arch = "x86")]
+    let arch = "i686";
+    #[cfg(target_arch = "arm")]
+    let arch = "armv5te";
+    #[cfg(target_env = "gnueabi")]
+    let env = "gnueabi";
+    #[cfg(all(target_env = "gnu", target_abi = "eabi"))]
+    let env = "gnueabi";
+    #[cfg(all(target_env = "gnu", not(target_abi = "eabi")))]
+    let env = "gnu";
+
+    let mut command = Command::new("cargo");
+    command.arg("run").arg("--quiet");
+    command.arg(&format!("--target={}-unknown-linux-{}", arch, env));
+
+    command.env("RUST_BACKTRACE", "0");
+    command.current_dir("example-crates/c-gull-unwinding");
+
+    command.stdout(Stdio::piped());
+    command.stderr(Stdio::piped());
+
+    let child = command.spawn().unwrap();
+    let pid = child.id();
+    let output = child.wait_with_output().unwrap();
+
+    assert_eq!(
+        std::str::from_utf8(&output.stdout).unwrap(),
+        "Hello, world!\nHello world using libc `printf`!\n"
     );
+    assert_eq!(
+        std::str::from_utf8(&output.stderr).unwrap(),
+        format!(
+            "\nthread 'main' ({pid}) panicked at src/main.rs:18:5:\n\
+            catch me!\n\
+            note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n"
+        )
+        .as_str()
+    );
+    assert!(output.status.success());
 }
 
 #[test]
